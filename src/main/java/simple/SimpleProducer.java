@@ -22,9 +22,15 @@ public class SimpleProducer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(configs);
 
+        // 메시지 키 미포함
         String messageValue = "test message";
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, messageValue);
         producer.send(record);
+
+        // 메시지 키 포함
+        ProducerRecord<String, String> record2 = new ProducerRecord<>(TOPIC_NAME, "key1", "vvv1");
+        producer.send(record2);
+
         logger.info("{}", record);
         producer.flush();
         producer.close();
